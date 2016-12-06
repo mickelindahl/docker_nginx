@@ -37,11 +37,11 @@ Run `apt-get update` and `apt-get install postfix libsasl2-modules`
 
 Then in /etc/postfix/main.cf add
 
-"""
+```
 relayhost = smpt.mailgun.org:587
 smtp_sasl_auth_enable = yes
 smtp_sasl_security_options = noanonymous
 smtp_sasl_password_maps=static:postmaster@yourdomain.se:{long id}
-"""
+```
 
 Reload postfix `service postfix restart`
