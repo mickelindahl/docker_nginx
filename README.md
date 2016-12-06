@@ -7,6 +7,8 @@ accordingly to your environemnt. Run `docker-compose up` -d in app directory to 
 
 ### SSL certificate from letsencrypt
 
+Run `mkdir certs` in apps root
+
 In `/etc/apt/sources.list` add `deb http://ftp.debian.org/debian jessie-backports main`
 
 Run `sudo apt-get update` then `sudo apt-get install certbot -t jessie-backports`
