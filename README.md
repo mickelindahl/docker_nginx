@@ -1,4 +1,6 @@
-## Docker nginx for grassy
+## Grassy docker nginx
+
+Reverse proxy with nginx server in docker container from (https://github.com/jwilder/nginx-proxy).
 
 Copy sample.docker-compose.yml to docker-compose.yml.Change paths to volumes in docker-compose 
 accordingly to your environemnt. Run `docker-compose up` -d in app directory to start service.
