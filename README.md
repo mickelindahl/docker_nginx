@@ -43,7 +43,7 @@ Then in /etc/postfix/main.cf add
 relayhost = smpt.mailgun.org:587
 smtp_sasl_auth_enable = yes
 smtp_sasl_security_options = noanonymous
-smtp_sasl_password_maps=static:postmaster@yourdomain.se:{long id}
+smtp_sasl_password_maps=static:postmaster@yourdomain.se:{password}
 ```
 
 Reload postfix `service postfix restart`
