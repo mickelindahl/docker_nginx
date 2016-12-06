@@ -11,7 +11,7 @@ In `/etc/apt/sources.list` add `deb http://ftp.debian.org/debian jessie-backport
 
 Run `sudo apt-get update` then `sudo apt-get install certbot -t jessie-backports`
 
-Stop webserver if active
+Stop nginx server if active
 
 Run `certbot certonly --standalone -d {domaim/subdomain}` or just `certbot certonly` and follow instructions.
 
