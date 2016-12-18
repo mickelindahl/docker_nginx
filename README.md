@@ -15,7 +15,7 @@ Run `sudo apt-get update` then `sudo apt-get install certbot -t jessie-backports
 
 Stop nginx server if active
 
-Run `certbot certonly --standalone -d {domaim/subdomain}` or just `certbot certonly` and follow instructions.
+Run `sudo certbot certonly --standalone -d {domaim/subdomain}` or just `sudo certbot certonly` and follow instructions.
 
 It will state were certs ends upp. Copy cert to certs directory using `copy_cert.sh` script   
 For example, a container with VIRTUAL_HOST=foo.bar.com should have a 
