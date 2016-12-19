@@ -1,8 +1,9 @@
 # Ignore docker-compose file
 docker-compose.yml
 
-# Ignore cert directory
+# Ignore certs and conf directories
 certs/
+conf/
 
 # Ignore certbot log files
 certbot*

@@ -7,7 +7,9 @@ accordingly to your environemnt. Run `docker-compose up` -d in app directory to 
 
 ### SSL certificate from letsencrypt
 
-Run `mkdir certs` in apps root
+Run `mkdir certs` and `mkdir conf` in apps root
+
+Copy added.conf to conf directory
 
 In `/etc/apt/sources.list` add `deb http://ftp.debian.org/debian jessie-backports main`
 
