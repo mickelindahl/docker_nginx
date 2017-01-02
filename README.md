@@ -66,10 +66,12 @@ Done!
 Setup cron job for certificate renewal. First renew certs with certbot renew and then copy them with 
 `copy_cert.sh`). 
 
-Run crontab -e and add `0 0 1 * * certbot renew` to run crontab renew one time each week
-
-Then add one line for each domain/subdomain `0 10 1 * * {path to app}/copy_cert.sh the.domain.se {path to app}`
-to copy cert 10 minutes after renewal. To recieve emails once job has run add MAILTO="your@email.se". OBS also 
+Run crontab -e and add 
+```
+0 0 1 * * certbot renew` to run crontab renew one time each week
+0 10 1 * * {path to app}/copy_all_certs.sh the.domain.se {path to app}
+```
+To recieve emails once job has run add MAILTO="your@email.se". OBS also 
 need to configure email server on the server.
 
 ## Server email support
