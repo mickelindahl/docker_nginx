@@ -28,7 +28,7 @@ Add to `docker-compose.yml`:
 volumes:
    - /var/run/docker.sock:/tmp/docker.sock
    - ./conf:/etc/nginx/conf.d
-   - ./certs:/etc/nginx/certs` # Added
+   - ./certs:/etc/nginx/certs # Added
 ports:
    - "80:80"
    - "443:443" #Added
