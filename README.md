@@ -10,6 +10,7 @@ Remarks
 - With docker-compose.yml `version: "2"` one need to set network_mode: "bridge" for ut to work out of the box. 
 Otherwise one need to add the compose network  to nginx see [https://docs.docker.com/compose/networking/](compose networking) 
 and [jwilde/nginx](https://github.com/jwilder/nginx-proxy).
+
 ## Installation
 
 Clone repository and cd into app directory
