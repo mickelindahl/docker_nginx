@@ -7,3 +7,6 @@ conf/
 
 # Ignore certbot log files
 certbot*
+
+# Ignore copy all script
+copy_all_certs.sh

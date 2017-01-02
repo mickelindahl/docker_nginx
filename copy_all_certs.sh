@@ -1,8 +1,13 @@
-echo "Copying cert and key for grassy.se"
-/opt/apps/nginx/copy_cert.sh grassy.se /opt/apps/nginx
+export HOME=/opt/apps/docker_nginx
 
-echo "Copying cert and key for jucie.grassy.se"
-/opt/apps/nginx/copy_cert.sh juice.grassy.se /opt/apps/nginx
+declare -a arr=("grobid.loredge.com" "crashboombang.loredge.com")
 
-echo "Copying cert and key for jenkins.grassy.se"
-/opt/apps/nginx/copy_cert.sh jenkins.grassy.se /opt/apps/nginx
+## now loop through the above array
+for i in "${arr[@]}"
+do
+
+  echo "Copying cert and key for $i"
+  $HOME/copy_cert.sh $i $HOME
+
+   # or do whatever with individual element of the array
+done

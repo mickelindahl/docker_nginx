@@ -53,10 +53,12 @@ Change owner of /etc/letsencrypt/archive to user that will run apps `sudo chown 
 
 Change back to app user
 
-Copy cert to certs directory using `copy_cert.sh` script   
-For example, a container with VIRTUAL_HOST=foo.bar.com should have a 
-foo.bar.com.crt and foo.bar.com.key file in the certs directory (see https://github.com/jwilder/nginx-proxy)
+Run `cp sample.copy_all_certs.sh copy_all_certs.sh` and add your app dir and subdomains to `copy_all_certs.sh`
 
+Copy certs `./copy_all_certs.sh`
+
+Done!
+ 
 ## SSL certificate renewal
 
 Setup cron job for certificate renewal. First renew certs with certbot renew and then copy them with 
