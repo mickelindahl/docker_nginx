@@ -38,7 +38,10 @@ Run `mkdir certs` in apps root
 
 Change to user with sudo
 
-Add new backport to source.list `sudo sh -c "echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list"`
+Add new backport to source.list 
+```
+sudo sh -c "echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list"
+```
 
 Then run `sudo apt-get update && sudo apt-get install certbot -t jessie-backports`
 
