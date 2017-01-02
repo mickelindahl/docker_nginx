@@ -10,8 +10,6 @@ Remarks
 - With docker-compose.yml `version: "2"` one need to set network_mode: "bridge" for ut to work out of the box. 
 Otherwise one need to add the compose network  to nginx see [https://docs.docker.com/compose/networking/](compose networking) 
 and [jwilder/nginx](https://github.com/jwilder/nginx-proxy).
-- If you get "502 Bad Gatway" after rebuilding an app one might need to delete the conf directory and 
-recreate nginx container
 
 ## Installation
 
@@ -30,37 +28,32 @@ Add to `docker-compose.yml`:
 volumes:
    - /var/run/docker.sock:/tmp/docker.sock
    - ./conf:/etc/nginx/conf.d
-   - ./certs:/etc/nginx/certs # Added
+   - ./certs:/etc/nginx/certs` # Added
 ports:
    - "80:80"
-   - "443:443" #Added
+   - "443:443"Added
 ```
 
 Run `mkdir certs` in apps root
 
-Change to user with sudo
-
 Add new backport to source.list 
 ```
-sudo sh -c "echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list"
+echo /etc/apt/sources.list < deb http://ftp.debian.org/debian jessie-backports main
 ```
 
-Then run `sudo apt-get update && sudo apt-get install certbot -t jessie-backports`
+Run 
+```
+sudo apt-get update && sudo apt-get install certbot -t jessie-backports
+```
 
 Stop nginx server if active
 
 Run `sudo certbot certonly --standalone -d {domaim/subdomain}` or just `sudo certbot certonly` and follow instructions.
 
-Change owner of /etc/letsencrypt/archive to user that will run apps `sudo chown -R {group}:{user} /etc/letsencrypt/archive`
+It will state were certs ends up (/etc/letsencrypt/archive/). Copy cert to certs directory using `copy_cert.sh` script   
+For example, a container with VIRTUAL_HOST=foo.bar.com should have a 
+foo.bar.com.crt and foo.bar.com.key file in the certs directory (see https://github.com/jwilder/nginx-proxy)
 
-Change back to app user
-
-Run `cp sample.copy_all_certs.sh copy_all_certs.sh` and add your app dir and subdomains to `copy_all_certs.sh`
-
-Copy certs `./copy_all_certs.sh`
-
-Done!
- 
 ## SSL certificate renewal
 
 Setup cron job for certificate renewal. First renew certs with certbot renew and then copy them with 
