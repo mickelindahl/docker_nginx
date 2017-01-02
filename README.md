@@ -36,7 +36,9 @@ ports:
 
 Run `mkdir certs` in apps root
 
-Add new backport to source.list `echo /etc/apt/sources.list < deb http://ftp.debian.org/debian jessie-backports main`
+Change to user with sudo
+
+Add new backport to source.list `sudo sh -c "echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list"`
 
 Then run `sudo apt-get update && sudo apt-get install certbot -t jessie-backports`
 
@@ -44,7 +46,11 @@ Stop nginx server if active
 
 Run `sudo certbot certonly --standalone -d {domaim/subdomain}` or just `sudo certbot certonly` and follow instructions.
 
-It will state were certs ends up (/etc/letsencrypt/archive/). Copy cert to certs directory using `copy_cert.sh` script   
+Change owner of /etc/letsencrypt/archive to user that will run apps `sudo chown -R {group}:{user} /etc/letsencrypt/archive`
+
+Change back to app user
+
+Copy cert to certs directory using `copy_cert.sh` script   
 For example, a container with VIRTUAL_HOST=foo.bar.com should have a 
 foo.bar.com.crt and foo.bar.com.key file in the certs directory (see https://github.com/jwilder/nginx-proxy)
 
