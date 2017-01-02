@@ -1,6 +1,6 @@
 # Grassy docker nginx
 
-Reverse proxy with nginx server in docker container from (https://github.com/jwilder/nginx-proxy).
+Reverse proxy with nginx server in docker container from [jwilder/nginx](https://github.com/jwilder/nginx-proxy).
 
 Copy `sample.docker-compose.yml` to `docker-compose.yml`. Change paths to volumes in `docker-compose.yml` 
 accordingly to your environemnt. Run `docker-compose up` -d in app directory to start service.
@@ -9,28 +9,42 @@ Remarks
 - If only 1 port exposed, then that port is used. No need for setting environment varialbe `VIRTUAL_PORT`.
 - With docker-compose.yml `version: "2"` one need to set network_mode: "bridge" for ut to work out of the box. 
 Otherwise one need to add the compose network  to nginx see [https://docs.docker.com/compose/networking/](compose networking) 
-and [jwilde/nginx](https://github.com/jwilder/nginx-proxy).
+and [jwilder/nginx](https://github.com/jwilder/nginx-proxy).
 
 ## Installation
 
 Clone repository and cd into app directory
 
-Run `mkdir conf && cp added.conf ./conf` in apps root. (to increase max upload file size) 
+Run `mkdir conf && cp added.conf ./conf` in apps root.  
 
 Run `cp sample.docker-compose.yml docker-compose.yml`
 
-To build and  `docker-compose ud -h
+To build and  `docker-compose up -d
 
 ## SSL certificate from letsencrypt
 
-Add `- ./certs:/etc/nginx/certs` under volumes  and `- "443:443"`
-under ports in `docker-compose.yml`.
+Add to `docker-compose.yml`:
+``` 
+volumes:
+   - /var/run/docker.sock:/tmp/docker.sock
+   - ./conf:/etc/nginx/conf.d
+   - ./certs:/etc/nginx/certs` # Added
+ports:
+   - "80:80"
+   - "443:443" Added
+```
 
 Run `mkdir certs` in apps root
 
-In `/etc/apt/sources.list` add `deb http://ftp.debian.org/debian jessie-backports main`
+Add new backport to source.list 
+```
+echo /etc/apt/sources.list < deb http://ftp.debian.org/debian jessie-backports main
+```
 
-Run `sudo apt-get update && sudo apt-get install certbot -t jessie-backports`
+Run 
+```
+sudo apt-get update && sudo apt-get install certbot -t jessie-backports
+```
 
 Stop nginx server if active
 
