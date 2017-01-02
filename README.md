@@ -1,4 +1,4 @@
-# Grassy docker nginx
+# Docker nginx
 
 Reverse proxy with nginx server in docker container from [jwilder/nginx](https://github.com/jwilder/nginx-proxy).
 
@@ -75,7 +75,7 @@ need to configure email server on the server.
 ## Server email support
 Configure mailgun with postfix such that server can send emails.
 
-Run `apt-get update` and `apt-get install postfix libsasl2-modules`
+Run `sudo apt-get update && sudo apt-get install postfix libsasl2-modules`
 
 Then in /etc/postfix/main.cf add
 
