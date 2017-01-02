@@ -77,7 +77,7 @@ Configure mailgun with postfix such that server can send emails.
 
 Run `sudo apt-get update && sudo apt-get install postfix libsasl2-modules`
 
-Then in /etc/postfix/main.cf add
+Run `sudo nano /etc/postfix/main.cf` and add
 
 ```
 relayhost = smpt.mailgun.org:587
@@ -86,4 +86,7 @@ smtp_sasl_security_options = noanonymous
 smtp_sasl_password_maps=static:postmaster@yourdomain.se:{password}
 ```
 
-Reload postfix `service postfix restart`
+Reload postfix `sudo service postfix restart`
+
+Test with `mail -s "Test mail" mikael.lindahlgreencargo.se <<< "A test message using Mailgun"
+`
