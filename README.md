@@ -31,20 +31,14 @@ volumes:
    - ./certs:/etc/nginx/certs` # Added
 ports:
    - "80:80"
-   - "443:443" Added
+   - "443:443" #Added
 ```
 
 Run `mkdir certs` in apps root
 
-Add new backport to source.list 
-```
-echo /etc/apt/sources.list < deb http://ftp.debian.org/debian jessie-backports main
-```
+Add new backport to source.list `echo /etc/apt/sources.list < deb http://ftp.debian.org/debian jessie-backports main`
 
-Run 
-```
-sudo apt-get update && sudo apt-get install certbot -t jessie-backports
-```
+Then run `sudo apt-get update && sudo apt-get install certbot -t jessie-backports`
 
 Stop nginx server if active
 
