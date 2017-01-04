@@ -74,6 +74,15 @@ Run crontab -e and add
 To recieve emails once job has run add MAILTO="your@email.se". OBS also 
 need to configure email server on the server.
 
+### SSL certificate removal
+This is being worked on for furtre realese (see)[https://community.letsencrypt.org/t/remove-domain-not-required-from-cert/14010].
+Here is a workaround that should work.
+
+```
+rm -rf /etc/letsencrypt/live/${DOMAIN}
+rm -rf /etc/letsencrypt/archive/${DOMAIN}
+rm /etc/letsencrypt/renewal/${DOMAIN}.conf
+```
 ## Server email support
 Configure mailgun with postfix such that server can send emails.
 
