@@ -1,6 +1,6 @@
 export HOME=/opt/apps/docker_nginx
 
-declare -a arr=("grobid.loredge.com" "crashboombang.loredge.com" "piwik.loredge.com")
+declare -a arr=("stakesarehigh.co" "piwik.stakesarehigh.co" "jenkins.stakesarehigh.co")
 
 ## now loop through the above array
 for i in "${arr[@]}"

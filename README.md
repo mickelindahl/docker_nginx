@@ -17,7 +17,7 @@ recreate nginx container
 
 Clone repository and cd into app directory
 
-Run `mkdir conf && cp added.conf ./conf` in apps root.  
+Run `mkdir -p conf/vhost.d && mkdir -p conf/conf.d && mkdir conf/certs && cp added.conf ./conf/conf.d` in apps root.  
 
 Run `cp sample.docker-compose.yml docker-compose.yml`
 
@@ -27,17 +27,6 @@ To build and  `docker-compose up -d
 
 Add to `docker-compose.yml`:
 ``` 
-volumes:
-   - /var/run/docker.sock:/tmp/docker.sock
-   - ./conf:/etc/nginx/conf.d
-   - ./certs:/etc/nginx/certs # Added
-ports:
-   - "80:80"
-   - "443:443" #Added
-```
-
-Run `mkdir certs` in apps root
-
 Change to user with sudo
 
 Add new backport to source.list 
