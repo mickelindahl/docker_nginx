@@ -25,8 +25,6 @@ To build and  `docker-compose up -d
 
 ## SSL certificate from letsencrypt
 
-Add to `docker-compose.yml`:
-``` 
 Change to user with sudo
 
 Add new backport to source.list 
