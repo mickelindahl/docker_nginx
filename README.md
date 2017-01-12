@@ -12,6 +12,8 @@ Otherwise one need to add the compose network  to nginx see [https://docs.docker
 and [jwilder/nginx](https://github.com/jwilder/nginx-proxy).
 - If you get "502 Bad Gatway" after rebuilding an app one might need to delete the conf directory and 
 recreate nginx container
+- For nginx it is [important](https://support.dnsimple.com/articles/what-is-ssl-certificate-chain/) 
+  that you use the fullchain.pem from letsencrypt for it to work properly in all browsers and devices. 
 
 ## Installation
 
