@@ -12,6 +12,8 @@ Otherwise one need to add the compose network  to nginx see [https://docs.docker
 and [jwilder/nginx](https://github.com/jwilder/nginx-proxy).
 - If you get "502 Bad Gatway" after rebuilding an app one might need to delete the conf directory and 
 recreate nginx container
+- For nginx it is [important](https://support.dnsimple.com/articles/what-is-ssl-certificate-chain/) 
+  that you use the fullchain.pem from letsencrypt for it to work properly in all browsers and devices. 
 
 ## Installation
 
@@ -24,19 +26,6 @@ Run `cp sample.docker-compose.yml docker-compose.yml`
 To build and  `docker-compose up -d
 
 ## SSL certificate from letsencrypt
-
-Add to `docker-compose.yml`:
-``` 
-volumes:
-   - /var/run/docker.sock:/tmp/docker.sock
-   - ./conf:/etc/nginx/conf.d
-   - ./certs:/etc/nginx/certs # Added
-ports:
-   - "80:80"
-   - "443:443" #Added
-```
-
-Run `mkdir certs` in apps root
 
 Change to user with sudo
 
