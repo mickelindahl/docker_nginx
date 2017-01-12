@@ -17,7 +17,7 @@ recreate nginx container
 
 Clone repository and cd into app directory
 
-Run `mkdir conf && cp added.conf ./conf` in apps root.  
+Run `mkdir -p conf/vhost.d && mkdir -p conf/conf.d && mkdir -p conf/certs && cp added.conf ./conf/conf.d` in apps root.  
 
 Run `cp sample.docker-compose.yml docker-compose.yml`
 
