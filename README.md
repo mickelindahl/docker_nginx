@@ -5,7 +5,9 @@ Reverse proxy with nginx server in docker container from [jwilder/nginx](https:/
 Copy `sample.docker-compose.yml` to `docker-compose.yml`. Change paths to volumes in `docker-compose.yml` 
 accordingly to your environemnt. Run `docker-compose up` -d in app directory to start service.
 
-Remarks
+Note:
+- `network_mode: "bridge" is important to add to compose file container. Otherwise
+nginx can not connect to the container.
 - If only 1 port exposed, then that port is used. No need for setting environment varialbe `VIRTUAL_PORT`.
 - With docker-compose.yml `version: "2"` one need to set network_mode: "bridge" for ut to work out of the box. 
 Otherwise one need to add the compose network  to nginx see [https://docs.docker.com/compose/networking/](compose networking) 
