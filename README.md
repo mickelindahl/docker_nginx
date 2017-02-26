@@ -54,13 +54,14 @@ Done!
  
 ## SSL certificate renewal
 
-Setup cron job for certificate renewal. First renew certs with certbot renew and then copy them with 
-`copy_cert.sh`). 
+Setup cron job for certificate renewal (ass root). First renew certs with certbot renew and then copy them with 
+`copy_cert.sh`). This particular setup will renew the certs the first day in the month at midnight and then 10 hours later copy 
+the renwed certs to directory where they are accesable by the application.
 
 Run crontab -e and add 
 ```
-0 0 1 * * certbot renew
-0 10 1 * * {path to app}/copy_all_certs.sh the.domain.se {path to app}
+0 0 1 * * docker stop {nginx container} && certbot renew && docker start {nginx container}
+0 10 1 * * {path to nginx}/copy_all_certs.sh
 ```
 To recieve emails once job has run add MAILTO="your@email.se". OBS also 
 need to configure email server on the server.
