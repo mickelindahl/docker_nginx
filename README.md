@@ -60,11 +60,12 @@ the renwed certs to directory where they are accesable by the application.
 
 Run crontab -e and add 
 ```
-0 0 1 * * docker stop {nginx container} && certbot renew && docker start {nginx container}
-0 10 1 * * {path to nginx}/copy_all_certs.sh
+0 0 1 * * docker stop  {nginx container} && certbot renew && {path to nginx}/copy_all_certs.sh && docker start {nginx container}
 ```
 To recieve emails once job has run add MAILTO="your@email.se". OBS also 
 need to configure email server on the server.
+
+DEbug crontab by following Open terminal and run tail -f /var/log/syslog
 
 ### SSL certificate removal
 This is being worked on for furtre realese (see)[https://community.letsencrypt.org/t/remove-domain-not-required-from-cert/14010].
