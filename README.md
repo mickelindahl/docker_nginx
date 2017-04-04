@@ -91,8 +91,10 @@ smtp_sasl_password_maps=static:postmaster@yourdomain.se:{password}
 
 Reload postfix `sudo service postfix restart`
 
-Test with `mail -s "Test mail" mikael.lindahlgreencargo.se <<< "A test message using Mailgun"
-`
+Open terminal and run `tail -f /var/log/syslog` to check if it went well 
+
+Then open another terminal and send email with `mail -s "Test mail" mikael.lindahl@greencargo.com <<< "A test message using Mailgun"`
+and chack if it went well in the output in the first termial
 
 ## Piwik
 For setup with piwik se [link](https://github.com/mickelindahl/docker_piwik)
