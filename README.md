@@ -18,11 +18,13 @@ recreate nginx container
 
 Clone repository and cd into app directory
 
+Copy `cp sample.virtual-hosts virtual-hosts` and add virtual hosts. One for each row.
+
 Run `install.sh` in apps root.  
 
 ## SSL certificate from letsencrypt
 
-### Install cerbot debian
+## Install cerbot debian
 Change to user with sudo
 
 Add new backport to source.list 
@@ -31,7 +33,7 @@ sudo sh -c "echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /et
 ```
 Then run `sudo apt-get update && sudo apt-get install certbot -t jessie-backports`
 
-### Add certificate
+## Add certificate
 
 #Stop nginx server if active
 
@@ -42,7 +44,7 @@ Run `add_certificate`
 
 #Change back to app user
 
-### Enable certificates
+## Enable certificates
 
 Run `cp sample.copy_all_certs.sh copy_all_certs.sh` and add your app dir and subdomains to `copy_all_certs.sh`
 
