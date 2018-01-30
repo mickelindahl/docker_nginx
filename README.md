@@ -67,6 +67,15 @@ need to configure email server on the server.
 
 DEbug crontab by following Open terminal and run tail -f /var/log/syslog
 
+### Allow specific ip adressed on subdomain
+
+Copy `sample.block.conf` to conf/vhost.d and make sure you name the file
+as the subdomain
+
+`cp sample.block.conf conf/vhost.d/{your.subdomian.com}`
+
+Add allowed ips in `conf/vhost.d/{your.subdomian.com}` 
+
 ### SSL certificate removal
 This is being worked on for furtre realese (see)[https://community.letsencrypt.org/t/remove-domain-not-required-from-cert/14010].
 Here is a workaround that should work.
