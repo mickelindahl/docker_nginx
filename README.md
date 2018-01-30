@@ -2,18 +2,6 @@
 
 Reverse proxy with nginx server in docker container from [jwilder/nginx](https://github.com/jwilder/nginx-proxy).
 
-Note:
-- `network_mode: "bridge" is important to add to compose file container. Otherwise
-nginx can not connect to the container.
-- If only 1 port exposed, then that port is used. No need for setting environment varialbe `VIRTUAL_PORT`.
-- With docker-compose.yml `version: "2"` one need to set network_mode: "bridge" for ut to work out of the box. 
-Otherwise one need to add the compose network  to nginx see [https://docs.docker.com/compose/networking/](compose networking) 
-and [jwilder/nginx](https://github.com/jwilder/nginx-proxy).
-- If you get "502 Bad Gatway" after rebuilding an app one might need to delete the conf directory and 
-recreate nginx container
-- For nginx it is [important](https://support.dnsimple.com/articles/what-is-ssl-certificate-chain/) 
-  that you use the fullchain.pem from letsencrypt for it to work properly in all browsers and devices. 
-
 ## Installation
 
 Clone repository and cd into app directory
@@ -93,3 +81,16 @@ See [debian manage](https://github.com/mickelindahl/debian_manage)
 
 ## Piwik
 For setup with piwik se [link](https://github.com/mickelindahl/docker_piwik)
+
+## Notes
+Note:
+- `network_mode: "bridge" is important to add to compose file container. Otherwise
+nginx can not connect to the container.
+- If only 1 port exposed, then that port is used. No need for setting environment varialbe `VIRTUAL_PORT`.
+- With docker-compose.yml `version: "2"` one need to set network_mode: "bridge" for ut to work out of the box. 
+Otherwise one need to add the compose network  to nginx see [https://docs.docker.com/compose/networking/](compose networking) 
+and [jwilder/nginx](https://github.com/jwilder/nginx-proxy).
+- If you get "502 Bad Gatway" after rebuilding an app one might need to delete the conf directory and 
+recreate nginx container
+- For nginx it is [important](https://support.dnsimple.com/articles/what-is-ssl-certificate-chain/) 
+  that you use the fullchain.pem from letsencrypt for it to work properly in all browsers and devices. 
