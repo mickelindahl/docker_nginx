@@ -2,9 +2,6 @@
 
 Reverse proxy with nginx server in docker container from [jwilder/nginx](https://github.com/jwilder/nginx-proxy).
 
-Copy `sample.docker-compose.yml` to `docker-compose.yml`. Change paths to volumes in `docker-compose.yml` 
-accordingly to your environemnt. Run `docker-compose up` -d in app directory to start service.
-
 Note:
 - `network_mode: "bridge" is important to add to compose file container. Otherwise
 nginx can not connect to the container.
@@ -21,48 +18,52 @@ recreate nginx container
 
 Clone repository and cd into app directory
 
-Run `mkdir -p conf/vhost.d && mkdir -p conf/conf.d && mkdir -p conf/certs && cp added.conf ./conf/conf.d` in apps root.  
-
-Run `cp sample.docker-compose.yml docker-compose.yml`
-
-To build and  `docker-compose up -d
+Run `install.sh` in apps root.  
 
 ## SSL certificate from letsencrypt
 
+### Install cerbot debian
 Change to user with sudo
 
 Add new backport to source.list 
 ```
 sudo sh -c "echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list"
 ```
-
 Then run `sudo apt-get update && sudo apt-get install certbot -t jessie-backports`
 
-Stop nginx server if active
+### Add certificate
 
-Run `sudo certbot certonly --standalone -d {domaim/subdomain}` or just `sudo certbot certonly` and follow instructions.
+#Stop nginx server if active
 
-Change owner of /etc/letsencrypt/archive to user that will run apps `sudo chown -R {group}:{user} /etc/letsencrypt/archive`
+Run `add_certificate`
+# Run `sudo certbot certonly --standalone -d {domaim/subdomain}` or just `sudo certbot certonly` and follow instructions.
 
-Change back to app user
+#Change owner of /etc/letsencrypt/archive to user that will run apps `sudo chown -R {group}:{user} /etc/letsencrypt/archive`
+
+#Change back to app user
+
+### Enable certificates
 
 Run `cp sample.copy_all_certs.sh copy_all_certs.sh` and add your app dir and subdomains to `copy_all_certs.sh`
 
-Copy certs `./copy_all_certs.sh`
+Copy certs `sudo ./copy_all_certs.sh`
 
 Done!
  
 ## SSL certificate renewal
 
 Setup cron job for certificate renewal (ass root). First renew certs with certbot renew and then copy them with 
-`copy_cert.sh`). This particular setup will renew the certs the first day in the month at midnight and then 10 hours later copy 
-the renwed certs to directory where they are accesable by the application.
+`copy_all_certs.sh`). 
 
-Run crontab -e and add 
-```
-0 0 1 * * docker stop  {nginx container} && certbot renew && {path to nginx}/copy_all_certs.sh && docker start {nginx container}
-```
-To recieve emails once job has run add MAILTO="your@email.se". OBS also 
+Run `sudo install_cron.sh`
+
+# Run crontab -e and add 
+# ```
+# 0 0 1 * * docker stop  {nginx container} && certbot renew && {path to nginx}/copy_all_certs.sh && docker start {nginx container}
+# ```
+
+## Cron email
+To recieve emails once job has run `crontab -e` add MAILTO="your@email.se". OBS also 
 need to configure email server on the server.
 
 DEbug crontab by following Open terminal and run tail -f /var/log/syslog
