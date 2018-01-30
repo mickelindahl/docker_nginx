@@ -10,3 +10,6 @@ certbot*
 
 # Ignore copy all script
 copy_all_certs.sh
+
+# No virtual hosts
+virtual-hosts
