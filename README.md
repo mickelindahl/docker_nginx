@@ -35,14 +35,14 @@ Then run `sudo apt-get update && sudo apt-get install certbot -t jessie-backport
 
 ## Add certificate
 
-#Stop nginx server if active
+//Stop nginx server if active
 
 Run `add_certificate`
-# Run `sudo certbot certonly --standalone -d {domaim/subdomain}` or just `sudo certbot certonly` and follow instructions.
+//Run `sudo certbot certonly --standalone -d {domaim/subdomain}` or just `sudo certbot certonly` and follow instructions.
 
-#Change owner of /etc/letsencrypt/archive to user that will run apps `sudo chown -R {group}:{user} /etc/letsencrypt/archive`
+//Change owner of /etc/letsencrypt/archive to user that will run apps `sudo chown -R {group}:{user} /etc/letsencrypt/archive`
 
-#Change back to app user
+//Change back to app user
 
 ## Enable certificates
 
@@ -59,10 +59,10 @@ Setup cron job for certificate renewal (ass root). First renew certs with certbo
 
 Run `sudo install_cron.sh`
 
-# Run crontab -e and add 
-# ```
-# 0 0 1 * * docker stop  {nginx container} && certbot renew && {path to nginx}/copy_all_certs.sh && docker start {nginx container}
-# ```
+// Run crontab -e and add 
+// ```
+// 0 0 1 * * docker stop  {nginx container} && certbot renew && {path to nginx}/copy_all_certs.sh && docker start {nginx container}
+// ```
 
 ## Cron email
 To recieve emails once job has run `crontab -e` add MAILTO="your@email.se". OBS also 
@@ -70,7 +70,7 @@ need to configure email server on the server.
 
 DEbug crontab by following Open terminal and run tail -f /var/log/syslog
 
-### Allow specific ip adressed on subdomain
+## Allow specific ip adressed on subdomain
 
 Copy `sample.block.conf` to conf/vhost.d and make sure you name the file
 as the subdomain
