@@ -1,8 +1,14 @@
+#!/bin/bash
+
+echo "Set HOME=/opt/apps/nginx"
 export HOME=/opt/apps/docker_nginx
 
-declare -a arr=("{domain/subdomain}" "{subdomain}" ... etc)
+echo "Declare array"
+declare -a arr=("{domain/subdomain}" \
+		"{subdomain}" \
+		"... etc")
 
-## now loop through the above array
+echo "Loop through the above array"
 for i in "${arr[@]}"
 do
 
