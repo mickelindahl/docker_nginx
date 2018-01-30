@@ -4,7 +4,7 @@ Reverse proxy with nginx server in docker container from [jwilder/nginx](https:/
 
 ## Installation
 
-Make sure certbot is installed [see](https://letsencrypt.org/getting-started/)
+Make sure certbot is installed [more info](https://letsencrypt.org/getting-started/)
 
 Clone repository and cd into app directory
 
