@@ -2,72 +2,65 @@
 
 Reverse proxy with nginx server in docker container from [jwilder/nginx](https://github.com/jwilder/nginx-proxy).
 
-Copy `sample.docker-compose.yml` to `docker-compose.yml`. Change paths to volumes in `docker-compose.yml` 
-accordingly to your environemnt. Run `docker-compose up` -d in app directory to start service.
-
-Note:
-- `network_mode: "bridge" is important to add to compose file container. Otherwise
-nginx can not connect to the container.
-- If only 1 port exposed, then that port is used. No need for setting environment varialbe `VIRTUAL_PORT`.
-- With docker-compose.yml `version: "2"` one need to set network_mode: "bridge" for ut to work out of the box. 
-Otherwise one need to add the compose network  to nginx see [https://docs.docker.com/compose/networking/](compose networking) 
-and [jwilder/nginx](https://github.com/jwilder/nginx-proxy).
-- If you get "502 Bad Gatway" after rebuilding an app one might need to delete the conf directory and 
-recreate nginx container
-- For nginx it is [important](https://support.dnsimple.com/articles/what-is-ssl-certificate-chain/) 
-  that you use the fullchain.pem from letsencrypt for it to work properly in all browsers and devices. 
-
 ## Installation
+
+Make sure certbot is installed [more info](https://letsencrypt.org/getting-started/)
 
 Clone repository and cd into app directory
 
-Run `mkdir -p conf/vhost.d && mkdir -p conf/conf.d && mkdir -p conf/certs && cp added.conf ./conf/conf.d` in apps root.  
+Copy `cp sample.virtual-hosts virtual-hosts` and add virtual hosts. One for each row.
 
-Run `cp sample.docker-compose.yml docker-compose.yml`
-
-To build and  `docker-compose up -d
+Run `install.sh` in apps root.  
 
 ## SSL certificate from letsencrypt
 
+## Install cerbot debian
 Change to user with sudo
 
 Add new backport to source.list 
 ```
 sudo sh -c "echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list"
 ```
-
 Then run `sudo apt-get update && sudo apt-get install certbot -t jessie-backports`
 
-Stop nginx server if active
+## Add certificate
 
-Run `sudo certbot certonly --standalone -d {domaim/subdomain}` or just `sudo certbot certonly` and follow instructions.
+//Stop nginx server if active
 
-Change owner of /etc/letsencrypt/archive to user that will run apps `sudo chown -R {group}:{user} /etc/letsencrypt/archive`
+Run `add_certificate`
+//Run `sudo certbot certonly --standalone -d {domaim/subdomain}` or just `sudo certbot certonly` and follow instructions.
 
-Change back to app user
+//Change owner of /etc/letsencrypt/archive to user that will run apps `sudo chown -R {group}:{user} /etc/letsencrypt/archive`
+
+//Change back to app user
+
+## Enable certificates
 
 Run `cp sample.copy_all_certs.sh copy_all_certs.sh` and add your app dir and subdomains to `copy_all_certs.sh`
 
-Copy certs `./copy_all_certs.sh`
+Copy certs `sudo ./copy_all_certs.sh`
 
 Done!
  
 ## SSL certificate renewal
 
 Setup cron job for certificate renewal (ass root). First renew certs with certbot renew and then copy them with 
-`copy_cert.sh`). This particular setup will renew the certs the first day in the month at midnight and then 10 hours later copy 
-the renwed certs to directory where they are accesable by the application.
+`copy_all_certs.sh`). 
 
-Run crontab -e and add 
-```
-0 0 1 * * docker stop  {nginx container} && certbot renew && {path to nginx}/copy_all_certs.sh && docker start {nginx container}
-```
-To recieve emails once job has run add MAILTO="your@email.se". OBS also 
+Run `sudo install_cron.sh`
+
+// Run crontab -e and add 
+// ```
+// 0 0 1 * * docker stop  {nginx container} && certbot renew && {path to nginx}/copy_all_certs.sh && docker start {nginx container}
+// ```
+
+## Cron email
+To recieve emails once job has run `crontab -e` add MAILTO="your@email.se". OBS also 
 need to configure email server on the server.
 
 DEbug crontab by following Open terminal and run tail -f /var/log/syslog
 
-### Allow specific ip adressed on subdomain
+## Allow specific ip adressed on subdomain
 
 Copy `sample.block.conf` to conf/vhost.d and make sure you name the file
 as the subdomain
@@ -90,3 +83,16 @@ See [debian manage](https://github.com/mickelindahl/debian_manage)
 
 ## Piwik
 For setup with piwik se [link](https://github.com/mickelindahl/docker_piwik)
+
+## Notes
+Note:
+- `network_mode: "bridge" is important to add to compose file container. Otherwise
+nginx can not connect to the container.
+- If only 1 port exposed, then that port is used. No need for setting environment varialbe `VIRTUAL_PORT`.
+- With docker-compose.yml `version: "2"` one need to set network_mode: "bridge" for ut to work out of the box. 
+Otherwise one need to add the compose network  to nginx see [https://docs.docker.com/compose/networking/](compose networking) 
+and [jwilder/nginx](https://github.com/jwilder/nginx-proxy).
+- If you get "502 Bad Gatway" after rebuilding an app one might need to delete the conf directory and 
+recreate nginx container
+- For nginx it is [important](https://support.dnsimple.com/articles/what-is-ssl-certificate-chain/) 
+  that you use the fullchain.pem from letsencrypt for it to work properly in all browsers and devices. 
