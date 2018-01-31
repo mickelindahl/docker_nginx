@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -d $1 ]
+if [ ! "$1" = "" ]; then
   
     VIRTUAL_HOST=$1
 
