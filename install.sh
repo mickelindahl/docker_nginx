@@ -17,7 +17,7 @@ if [ -f hosts ]; then
 
   VIRTUAL_HOSTS=cat virtual-hosts | tr '\n' ' '
   for host in $VIRTUAL_HOSTS; do
-     
+
       ./add_certificate.sh $host
 
   done
@@ -30,7 +30,7 @@ if [ -f hosts ]; then
   sudo ./copy_all_certs.sh 
 
   sudo install_cron.sh
-  
+
 else
 
   read -p "Missing virtual-hosts file continue? (Y/n)?" choice

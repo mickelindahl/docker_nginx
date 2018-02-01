@@ -17,5 +17,5 @@ if [ -f /etc/letsencrypt/live/$VIRTUAL_HOST ]; then
 fi
 
 docker stop nginx
-certbot certonly --standalone -d $VIRTUAL_HOST
+sudo certbot certonly --standalone -d $VIRTUAL_HOST
 docker start nginx

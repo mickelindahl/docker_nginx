@@ -8,8 +8,10 @@ conf/
 # Ignore certbot log files
 certbot*
 
-# Ignore copy all script
+# Localt scripts
 copy_all_certs.sh
+renew-certs.sh
 
 # No virtual hosts
 virtual-hosts
+
