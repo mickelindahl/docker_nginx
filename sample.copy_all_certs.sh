@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Set HOME={path-nginx}"
-export HOME={path-nginx}/docker_nginx
+export HOME={path-nginx}
 
 echo "Declare array"
 #declare -a arr=("{domain/subdomain}" \
@@ -13,7 +13,7 @@ if [ ! -f virtual-hosts ]; then
   exit
 fi 
 
-VIRTUAL_HOSTS=cat virtual-hosts | tr '\n' ' '
+VIRTUAL_HOSTS=`cat virtual-hosts | tr '\n' ' '`
 
 echo "Loop through the above array"
 for host in $VIRTUAL_HOSTS

@@ -4,6 +4,7 @@ docker-compose.yml
 # Ignore certs and conf directories
 certs/
 conf/
+local-certs/
 
 # Ignore certbot log files
 certbot*
@@ -15,3 +16,5 @@ renew-certs.sh
 # No virtual hosts
 virtual-hosts
 
+# Not piwik env
+nginx-piwik.env
