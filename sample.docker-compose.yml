@@ -14,9 +14,15 @@ services:
       - ./conf/conf.d:/etc/nginx/conf.d
       - ./conf/vhost.d:/etc/nginx/vhost.d
       - ./conf/certs:/etc/nginx/certs  
-    network_mode: "bridge"
+#    network_mode: "bridge"
+    networks:
+      - nginx
     logging:
       driver: "json-file"
       options:
         max-size: "200k"
         max-file: "10" 
+
+networks:
+   nginx:
+      external: true

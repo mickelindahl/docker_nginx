@@ -1,5 +1,7 @@
 #!/bin/bash
 
+NETWORK=nginx
+
 if [ ! $USER==root ]; then
     echo "Please run as root"
 fi
@@ -23,9 +25,16 @@ cp added.conf ./conf/conf.d/added.conf
 echo "Create compose file"
 cp sample.docker-compose.yml docker-compose.yml
 
-if [ -d local-certs ]; then
+if [ -f virtual-hosts-local ]; then
+  
+  VIRTUAL_HOSTS_LOCAL=`cat virtual-hosts-local | tr '\n' ' '`
+  for host in $VIRTUAL_HOSTS_LOCAL; do
 
-   cp local-certs/* conf/certs
+     echo "Adding cert and key for local  $host"
+     cp ./local-certs/greencargo.com.crt conf/certs/$host.crt
+     cp ./local-certs/greencargo.com.key conf/certs/$host.key
+
+  done
 
 fi
 
@@ -82,6 +91,13 @@ else
   esac
 
 fi
+
+TMP=`docker network ls | grep $NETWORK`
+if [ -z "$TMP" ]; then
+   echo "Create external network"
+   docker network create -d bridge $NETWORK
+fi
+
 
 echo ""Stop and remove old instances 
 docker-compose stop
