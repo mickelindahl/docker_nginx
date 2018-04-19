@@ -60,6 +60,10 @@ else
 
 fi
 
+sed -i "s#{http-proxy}#$http_proxy#g" docker-compose.yml
+sed -i "s#{https-proxy}#$https_proxy#g" docker-compose.yml
+
+
 
 if [ -f virtual-hosts ]; then
 
@@ -104,4 +108,4 @@ docker-compose stop
 docker-compose rm -f
 
 echo "Start"
-docker-compose up -d
+docker-compose --compatibility up -d
