@@ -103,7 +103,7 @@ if [ -z "$TMP" ]; then
 fi
 
 
-echo ""Stop and remove old instances 
+echo "Stop and remove old instances" 
 docker-compose stop
 docker-compose rm -f
 
