@@ -6,6 +6,10 @@ if [ ! $USER==root ]; then
     echo "Please run as root"
 fi
 
+cp sample.monitor.cron monitor.cron
+
+sed -i "s#{src}#$(pwd)#g" monitor.cron
+mv monitor.cron /etc/cron.d/nginx-monitor.cron
 
 echo "Remove old conf"
 rm -r conf/conf.d
@@ -26,7 +30,7 @@ echo "Create compose file"
 cp sample.docker-compose.yml docker-compose.yml
 
 if [ -f virtual-hosts-local ]; then
-  
+
   VIRTUAL_HOSTS_LOCAL=`cat virtual-hosts-local | tr '\n' ' '`
   for host in $VIRTUAL_HOSTS_LOCAL; do
 
@@ -50,9 +54,9 @@ if [ -f nginx-piwik.env ]; then
         fi
 
    done
-   
+
    sed -i "s#{piwik-path-html}#- $PIWIK_PATH_HTML:/var/www/html#g" docker-compose.yml
-  
+
 else
 
    sed -i "s#{piwik-path-html}##g" docker-compose.yml
@@ -62,7 +66,6 @@ fi
 
 sed -i "s#{http-proxy}#$http_proxy#g" docker-compose.yml
 sed -i "s#{https-proxy}#$https_proxy#g" docker-compose.yml
-
 
 
 if [ -f virtual-hosts ]; then
@@ -87,7 +90,6 @@ if [ -f virtual-hosts ]; then
 
 else
 
-
   read -p "Missing virtual-hosts file continue (Y/n)?" choice
   case "$choice" in
        n|N ) exit ;;
@@ -96,12 +98,13 @@ else
 
 fi
 
+
+
 TMP=`docker network ls | grep $NETWORK`
 if [ -z "$TMP" ]; then
    echo "Create external network"
    docker network create -d bridge $NETWORK
 fi
-
 
 echo "Stop and remove old instances" 
 docker-compose stop
