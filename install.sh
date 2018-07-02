@@ -57,7 +57,6 @@ else
 
    sed -i "s#{piwik-path-html}##g" docker-compose.yml
 
-
 fi
 
 sed -i "s#{http-proxy}#$http_proxy#g" docker-compose.yml
