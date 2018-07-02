@@ -1,1 +1,1 @@
-*/10 * * * * root cd {src} && ./monitor.sh
+* * * * * root cd {src} && ./monitor.sh
