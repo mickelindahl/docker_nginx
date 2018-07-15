@@ -21,3 +21,6 @@ nginx-piwik.env
 
 # Monitor log
 monitor.log
+
+# Redirects conf
+redirects.conf

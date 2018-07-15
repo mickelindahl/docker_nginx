@@ -26,6 +26,14 @@ mkdir -p conf/certs
 echo "Copy added.conf"
 cp added.conf ./conf/conf.d/added.conf
 
+
+if [ -f redirects.conf ]; then
+
+  echo "Copy redirect.conf"
+  cp redirects.conf ./conf/conf.d/redirects.conf
+
+fi
+
 echo "Create compose file"
 cp sample.docker-compose.yml docker-compose.yml
 
