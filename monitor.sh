@@ -17,7 +17,7 @@ if [[ $STATUS != "running" ]] || [[ $STATUS2 = "not running" ]]; then
 
   DATE=`date '+%Y-%m-%d %H:%M:%S'`
 
-  echo "$DATE | STATUS: $STATUS STATUS2: $STATUS2 STATE: $STATE" >> monitor.log
+  echo "$DATE | STATUS: $STATUS | STATUS2: $STATUS2 |  STATE: $STATE" >> monitor.log
 
   docker start $CONTAINER
 
