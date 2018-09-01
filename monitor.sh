@@ -3,8 +3,9 @@
 CONTAINER=nginx
 
 STATUS=$(docker inspect --format='{{.State.Status}}' $CONTAINER)
+STATUS2=$(docker exec  nginx true 2>/dev/null || echo "not running")
 
-if [ $STATUS != "running" ]; then
+if [[ $STATUS != "running" ]] || [[ $STATUS2 = "not running" ]]; then
 
   echo "Nginx is down restarting $STATUS"
 
@@ -16,7 +17,7 @@ if [ $STATUS != "running" ]; then
 
   DATE=`date '+%Y-%m-%d %H:%M:%S'`
 
-  echo "$DATE | $STATE" >> monitor.log
+  echo "$DATE | STATUS: $STATUS STATUS2: $STATUS2 STATE: $STATE" >> monitor.log
 
   docker start $CONTAINER
 
