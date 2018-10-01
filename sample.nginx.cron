@@ -1,1 +1,1 @@
-0 0 1,7,15,23 * * root docker stop nginx && certbot renew && {path-nginx}/copy_all_certs.sh && docker start nginx
+0 0 1,6,11,16,21,26 * * root docker stop nginx && certbot renew && {path-nginx}/copy_all_certs.sh && docker start nginx
