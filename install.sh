@@ -6,10 +6,10 @@ if [ ! $USER==root ]; then
     echo "Please run as root"
 fi
 
-cp sample.monitor.cron monitor.cron
+cp sample.monitor-cron monitor-cron
 
-sed -i "s#{src}#$(pwd)#g" monitor.cron
-mv monitor.cron /etc/cron.d/nginx-monitor.cron
+sed -i "s#{src}#$(pwd)#g" monitor-cron
+mv monitor-cron /etc/cron.d/nginx-monitor-cron
 
 echo "Remove old conf"
 rm -r conf/conf.d

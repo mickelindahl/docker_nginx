@@ -1,7 +1,7 @@
 #!/bin/bash
-cp sample.nginx.cron nginx.cron
+cp sample.nginx-cron nginx-cron
 
-sed -i "s#{path-nginx}#$(pwd)#g" nginx.cron
+sed -i "s#{path-nginx}#$(pwd)#g" nginx-cron
 
-mv nginx.cron /etc/cron.d
+mv nginx-cron /etc/cron.d
 
