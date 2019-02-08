@@ -1,34 +1,18 @@
 #!/bin/bash
 
-echo "Set HOME={path-nginx}"
-export HOME={path-nginx}
+echo `date`
+echo "Stopping nginx"
+docker stop nginx
 
-echo "Declare array"
-#declare -a arr=("{domain/subdomain}" \
-#		"{subdomain}" \
-#		"... etc")
+echo "Wait 5 sec"
+sleep 5
 
-if [ ! -f "virtual-hosts" ]; then
-  echo "Missing virtual-host file. Please create it. See README.md"
-  exit
-fi
+echo "Renew certs" 
+certbot renew 
 
-#docker nginx stop
-certbot renew
+cd {path-nginx}
+./copy_all_certs.sh
 
-VIRTUAL_HOSTS=sudo cat $HOME/virtual-hosts | tr '\n' ' '
-
-echo "Loop through the above array"
-for host in $VIRTUAL_HOSTS
-do
-
-  echo "Copying cert and key for $host"
-  sudo $HOME/copy_cert.sh $host $HOME
-
-   # or do whatever with individual element of the array
-done
-
-echo "Clearing previous conf"
-sudo rm $HOME/conf/conf.d/default.conf
-
-#docker nginx start
+echo `date`
+echo "Starting nginx"
+docker start nginx
