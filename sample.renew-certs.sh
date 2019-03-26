@@ -4,6 +4,9 @@ echo `date`
 echo "Stopping nginx"
 docker stop nginx
 
+echo "Wait 5 sec"
+sleep 5
+
 echo "Renew certs" 
 certbot renew 
 
