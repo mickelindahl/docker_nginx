@@ -25,6 +25,7 @@ mkdir -p conf/certs
 
 echo "Copy added.conf"
 cp added.conf ./conf/conf.d/added.conf
+#cp nginx-error.conf ./conf/conf.d/nginx-error.conf
 
 
 if [ -f redirects.conf ]; then
@@ -49,6 +50,11 @@ if [ -f virtual-hosts-local ]; then
   done
 
 fi
+
+# Create default certs used for 503 page
+cp ./local-certs/greencargo.com.crt conf/certs/default.crt
+cp ./local-certs/greencargo.com.key conf/certs/default.key
+
 
 if [ -f nginx-piwik.env ]; then
 

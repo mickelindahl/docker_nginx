@@ -5,6 +5,7 @@ docker-compose.yml
 certs/
 conf/
 local-certs/
+html/
 # Ignore certbot log files
 certbot*
 
