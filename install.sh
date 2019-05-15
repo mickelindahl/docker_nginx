@@ -25,8 +25,15 @@ mkdir -p conf/certs
 
 echo "Copy added.conf"
 cp added.conf ./conf/conf.d/added.conf
+cp nginx-error.conf ./conf/vhost.d/whiteboard.greencargo.com
 #cp nginx-error.conf ./conf/conf.d/nginx-error.conf
 
+# Error pages
+if [ ! -d html ]; then
+  mkdir -p html
+  cp 50x.html html/503.html
+  cp index.html html/index.html
+fi
 
 if [ -f redirects.conf ]; then
 
