@@ -129,6 +129,7 @@ fi
 echo "Stop and remove old instances" 
 docker-compose stop
 docker-compose rm -f
+docker-compose build
 
 echo "Start"
 docker-compose --compatibility up -d

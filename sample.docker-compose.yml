@@ -2,7 +2,9 @@ version: "3"
 
 services:
   nginx:
-    image: jwilder/nginx-proxy
+    build:
+       context: .
+    image: local/nginx-proxy
     container_name: nginx
     restart: always
     ports:

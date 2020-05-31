@@ -108,3 +108,6 @@ and [jwilder/nginx](https://github.com/jwilder/nginx-proxy).
 recreate nginx container
 - For nginx it is [important](https://support.dnsimple.com/articles/what-is-ssl-certificate-chain/) 
   that you use the fullchain.pem from letsencrypt for it to work properly in all browsers and devices. 
+- Special buld docker-gen binary that can identify docker container id from /proc "/proc/self/cgroup" 
+  with /docker_slice/ proceeding name. Hade to add method for matchDockerLimitCurrentContainerID in 
+  jwilder/docker-gen context.go. Se https://github.com/mickelindahl/docker-gen
