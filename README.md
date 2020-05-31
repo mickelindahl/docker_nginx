@@ -110,4 +110,5 @@ recreate nginx container
   that you use the fullchain.pem from letsencrypt for it to work properly in all browsers and devices. 
 - Special buld docker-gen binary that can identify docker container id from /proc "/proc/self/cgroup" 
   with /docker_slice/ proceeding name. Hade to add method for matchDockerLimitCurrentContainerID in 
-  jwilder/docker-gen context.go. Se https://github.com/mickelindahl/docker-gen
+  jwilder/docker-gen context.go. Se https://github.com/mickelindahl/docker-gen. For how to limit docker total 
+  resources utilization see https://github.com/mickelindahl/docker_daemon_limit_total_resources. 
