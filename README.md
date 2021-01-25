@@ -112,3 +112,14 @@ recreate nginx container
   with /docker_slice/ proceeding name. Hade to add method for matchDockerLimitCurrentContainerID in 
   jwilder/docker-gen context.go. Se https://github.com/mickelindahl/docker-gen. For how to limit docker total 
   resources utilization see https://github.com/mickelindahl/docker_daemon_limit_total_resources. 
+
+
+#### Update greencargo SSL wildcard certificate
+
+If greenboard and/or greendrive ssl certificates has expired do this. You need a new valid ".pem" file
+
+- Step 1:Put the ".pem" file in "/opt/repos/docker_nginx/local-certs" and name it "greencargo.com.pem". 
+- Step 2:Run "generate_key_and_crt_from_pem.sh" from folder "/opt/repos/docker_nginx"  as root 
+- Step 3 Run "./install.sh" from folder from folder "/opt/repos/docker_nginx/ as root
+
+Done!

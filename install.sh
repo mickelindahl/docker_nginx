@@ -4,6 +4,7 @@ NETWORK=nginx
 
 if [ ! $USER==root ]; then
     echo "Please run as root"
+    exit
 fi
 
 cp sample.monitor-cron monitor-cron
