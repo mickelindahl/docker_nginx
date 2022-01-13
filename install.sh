@@ -4,7 +4,10 @@ NETWORK=nginx
 
 if [ ! $USER==root ]; then
     echo "Please run as root"
+    exit
 fi
+
+DEFAULT_DOMAIN = $1
 
 cp sample.monitor-cron monitor-cron
 
@@ -25,7 +28,7 @@ mkdir -p conf/certs
 
 echo "Copy added.conf"
 cp added.conf ./conf/conf.d/added.conf
-cp nginx-error.conf ./conf/vhost.d/whiteboard.greencargo.com
+#cp nginx-error.conf ./conf/vhost.d/whiteboard.greencargo.com
 #cp nginx-error.conf ./conf/conf.d/nginx-error.conf
 
 # Error pages
@@ -47,20 +50,31 @@ cp sample.docker-compose.yml docker-compose.yml
 
 if [ -f virtual-hosts-local ]; then
 
-  VIRTUAL_HOSTS_LOCAL=`cat virtual-hosts-local | tr '\n' ' '`
-  for host in $VIRTUAL_HOSTS_LOCAL; do
+  # Greencargo specific config
+  if [ -f  local-certs/greencargo.com.crt ]; then
+     VIRTUAL_HOSTS_LOCAL=`cat virtual-hosts-local | tr '\n' ' '`
+     for host in $VIRTUAL_HOSTS_LOCAL; do
 
-     echo "Adding cert and key for local  $host"
-     cp ./local-certs/greencargo.com.crt conf/certs/$host.crt
-     cp ./local-certs/greencargo.com.key conf/certs/$host.key
+        echo "Adding cert and key for local  $host"
+        cp ./local-certs/greencargo.com.crt conf/certs/$host.crt
+        cp ./local-certs/greencargo.com.key conf/certs/$host.key
 
-  done
+     done
 
+     # Create default certs used for 503 page
+     cp ./local-certs/greencargo.com.crt conf/certs/default.crt
+     cp ./local-certs/greencargo.com.key conf/certs/default.key
+
+   fi
 fi
 
-# Create default certs used for 503 page
-cp ./local-certs/greencargo.com.crt conf/certs/default.crt
-cp ./local-certs/greencargo.com.key conf/certs/default.key
+if [ -z DEFAULT_DOMAIN ]; then
+
+    echo "Create default certs used for 503 page"
+    cp ./local-certs/greencargo.com.crt conf/certs/default.crt
+    cp ./local-certs/greencargo.com.key conf/certs/default.key
+
+fi
 
 
 if [ -f nginx-piwik.env ]; then
@@ -107,6 +121,15 @@ if [ -f virtual-hosts ]; then
   ./copy_all_certs.sh
 
   ./install_cron.sh
+
+  if [ -z DEFAULT_DOMAIN ]; then
+
+      echo "Create default certs used for 503 page"
+      cp ./local-certs/greencargo.com.crt conf/certs/default.crt
+      cp ./local-certs/greencargo.com.key conf/certs/default.key
+
+   fi
+
 
 else
 
