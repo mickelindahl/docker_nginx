@@ -86,13 +86,13 @@ elif [ -f virtual-hosts ]; then
 
   ./install_cron.sh
 
-  if [ -z DEFAULT_DOMAIN ]; then
+  #if [ -z DEFAULT_DOMAIN ]; then
 
-      echo "Create default certs used for 503 page"
-      cp ./local-certs/greencargo.com.crt conf/certs/default.crt
-      cp ./local-certs/greencargo.com.key conf/certs/default.key
+   #   echo "Create default certs used for 503 page"
+   #   cp ./local-certs/greencargo.com.crt conf/certs/default.crt
+   #   cp ./local-certs/greencargo.com.key conf/certs/default.key
 
-   fi
+   #fi
 else
 
   echo "Missing files in  virtual-hosts or virtual-hosts-local files"

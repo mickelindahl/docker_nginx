@@ -4,7 +4,8 @@ Reverse proxy with nginx server in docker container from [jwilder/nginx](https:/
 
 ## Installation
 
-Make sure certbot is installed [more info](https://letsencrypt.org/getting-started/)
+Make sure certbot is installed see [letsencrypt](https://letsencrypt.org/getting-started/) and
+[certbot](https://certbot.eff.org/instructions?ws=nginx&os=debianbuster)
 
 Clone repository and cd into app directory
 
@@ -40,14 +41,20 @@ Then run `sudo apt-get update && sudo apt-get install certbot -t jessie-backport
 
 ## Add certificate
 
-//Stop nginx server if active
 
-Run `add_certificate`
-//Run `sudo certbot certonly --standalone -d {domaim/subdomain}` or just `sudo certbot certonly` and follow instructions.
+Run `sudo ./add_certificate`
 
-//Change owner of /etc/letsencrypt/archive to user that will run apps `sudo chown -R {group}:{user} /etc/letsencrypt/archive`
+or
 
-//Change back to app user
+Stop nginx server if active
+
+Run `sudo certbot certonly --standalone -d {domaim/subdomain}` or just `sudo certbot certonly` and follow instructions.
+
+Then 
+
+Change owner of /etc/letsencrypt/archive to user that will run apps `sudo chown -R {group}:{user} /etc/letsencrypt/archive`
+
+Change back to app user
 
 ## Enable certificates
 
