@@ -11,7 +11,17 @@ Clone repository and cd into app directory
 
 Copy `cp sample.virtual-hosts virtual-hosts` and add virtual hosts. One for each row.
 
-Run `install.sh` in apps root.  
+Run 
+
+`sudo ./install.sh` in apps root.  
+
+or 
+
+`sudo ./install.sh {default-domain}`
+
+NOTE: Setting default-domain is good if you want to 
+handle 500 for SSL. See [nginx/wilder](https://github.com/nginx-proxy/nginx-proxy#how-ssl-support-works) for more
+
 
 Ensure your apps `docker-compose.yml` files that nginx are rerouting to contains 
 ```
