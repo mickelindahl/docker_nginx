@@ -95,7 +95,7 @@ elif [ -f virtual-hosts ]; then
    fi
 else
 
-  echo "Missing files in  virtual-hosts or virtual-hosts-local directories"
+  echo "Missing files in  virtual-hosts or virtual-hosts-local files"
   echo "This means that the server will not have ssh certificates"
   read -p "Continue (Y/n)?" choice
   case "$choice" in
