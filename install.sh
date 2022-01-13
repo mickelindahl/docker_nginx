@@ -34,9 +34,11 @@ cp added.conf ./conf/conf.d/added.conf
 # Error pages
 if [ ! -d html ]; then
   mkdir -p html
-  cp 50x.html html/503.html
-  cp index.html html/index.html
 fi
+
+cp 50x.html html/50x.html
+cp 50x.html html/503.html
+cp index.html html/index.html
 
 if [ -f redirects.conf ]; then
 
