@@ -27,3 +27,6 @@ install.log
 
 # Redirects conf
 redirects.conf
+
+# Editor
+.idea

@@ -66,43 +66,7 @@ if [ -f virtual-hosts-local ]; then
      cp ./local-certs/greencargo.com.key conf/certs/default.key
 
    fi
-fi
-
-if [ -z DEFAULT_DOMAIN ]; then
-
-    echo "Create default certs used for 503 page"
-    cp ./local-certs/greencargo.com.crt conf/certs/default.crt
-    cp ./local-certs/greencargo.com.key conf/certs/default.key
-
-fi
-
-
-if [ -f nginx-piwik.env ]; then
-
-   export $(cat nginx-piwik.env | xargs)
-
-   for arg in "PIWIK_PATH_HTML"; do
-
-        if [ "${!arg}" = "" ];then
-            echo "Missing env $arg in piwik.env"
-            exit 1
-        fi
-
-   done
-
-   sed -i "s#{piwik-path-html}#- $PIWIK_PATH_HTML:/var/www/html#g" docker-compose.yml
-
-else
-
-   sed -i "s#{piwik-path-html}##g" docker-compose.yml
-
-fi
-
-sed -i "s#{http-proxy}#$http_proxy#g" docker-compose.yml
-sed -i "s#{https-proxy}#$https_proxy#g" docker-compose.yml
-
-
-if [ -f virtual-hosts ]; then
+elif [ -f virtual-hosts ]; then
 
   echo "Create virtual host certificates"
 
@@ -129,11 +93,11 @@ if [ -f virtual-hosts ]; then
       cp ./local-certs/greencargo.com.key conf/certs/default.key
 
    fi
-
-
 else
 
-  read -p "Missing virtual-hosts file continue (Y/n)?" choice
+  echo "Missing files in  virtual-hosts or virtual-hosts-local directories"
+  echo "This means that the server will not have ssh certificates"
+  read -p "Continue (Y/n)?" choice
   case "$choice" in
        n|N ) exit ;;
        * ) echo "Continue" ;;
@@ -141,7 +105,31 @@ else
 
 fi
 
+if [ -f nginx-piwik.env ]; then
 
+   export $(cat nginx-piwik.env | xargs)
+
+   for arg in "PIWIK_PATH_HTML"; do
+
+        if [ "${!arg}" = "" ];then
+            echo "Missing env $arg in piwik.env"
+            exit 1
+        fi
+
+   done
+
+   sed -i "s#{piwik-path-html}#- $PIWIK_PATH_HTML:/var/www/html#g" docker-compose.yml
+
+else
+
+   echo "Missing piwik configuration. Removing option from docker-compose"
+   sed -i "s#{piwik-path-html}##g" docker-compose.yml
+
+fi
+
+# Missing from sample.docker-compose.yml
+#sed -i "s#{http-proxy}#$http_proxy#g" docker-compose.yml
+#sed -i "s#{https-proxy}#$https_proxy#g" docker-compose.yml
 
 TMP=`docker network ls | grep $NETWORK`
 if [ -z "$TMP" ]; then
