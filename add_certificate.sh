@@ -23,7 +23,11 @@ if [ -d /etc/letsencrypt/live/$VIRTUAL_HOST ]; then
 
 fi
 
+echo "S"
+
 docker stop nginx
+
+echo "Wait 10 sec"
 sleep 10
 certbot certonly --standalone -d $VIRTUAL_HOST
 docker start nginx

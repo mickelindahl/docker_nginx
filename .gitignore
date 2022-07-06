@@ -22,6 +22,7 @@ nginx-piwik.env
 
 # Monitor log
 monitor.log
+monitor.disable
 renew-certs.log
 install.log
 
