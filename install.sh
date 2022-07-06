@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo "Date"
+echo `date`
+
 NETWORK=nginx
 
 if [ ! $USER==root ]; then
@@ -7,7 +10,9 @@ if [ ! $USER==root ]; then
     exit
 fi
 
-DEFAULT_DOMAIN = $1
+DEFAULT_DOMAIN=$1
+
+echo "DEFAULT_DOMAIN: ${DEFAULT_DOMAIN}"
 
 cp sample.monitor-cron monitor-cron
 
@@ -88,12 +93,20 @@ elif [ -f virtual-hosts ]; then
 
   ./install_cron.sh
 
+  #echo "$DEFAULT_DOMAIN"
+  #[ -z "$DEFAULT_DOMAIN" ] && echo "Empty 1"
+  #[ -z $DEFAULT_DOMAIN ] && echo "Empty 2"
+  #[ -z "" ] && echo "Empty 3"
 
-  if [ -z DEFAULT_DOMAIN ]; then
+  if [[ ! -z $DEFAULT_DOMAIN ]]; then
 
        echo "Create default certs used for 503 page"
        cp conf/certs/${DEFAULT_DOMAIN}.crt conf/certs/default.crt
        cp conf/certs/${DEFAULT_DOMAIN}.key conf/certs/default.key
+
+   else
+
+     echo "No deafult domain skipping"
 
    fi
 else
