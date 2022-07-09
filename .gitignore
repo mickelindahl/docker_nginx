@@ -11,7 +11,7 @@ certbot*
 
 # Localt scripts
 copy_all_certs.sh
-renew-certs.sh
+#renew-certs.sh
 
 # No virtual hosts
 virtual-hosts

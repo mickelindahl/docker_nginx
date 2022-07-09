@@ -11,13 +11,14 @@ Help(){
   echo "then it will restart the container"
   echo ""
   echo "Usage:"
-  echo  "monitor.sh [options] [COMMAND]"
-  echo "monitor.sh -h|--help"
+  echo  "monitor.sh [COMMAND] [options]"
+  echo "monitor.sh -h|-help"
   echo ""
   echo "Options":
-  echo " -h, --help             Display help text"
-  echo " -m, --message MSG      Message to add to monitor log for a" 
-  echo "                        specific command"
+  echo " -c, --clear-log       Clear logfile"
+  echo " -h, --help            Display help text"
+  echo " -m, --message MSG     Message to add to monitor log for a"
+  echo "                       specific command"
   echo ""
   echo "Commands:"
   echo " run          Run montoring service"
@@ -30,6 +31,18 @@ Help(){
 ############################################################
 # Disable                                                  #
 ############################################################
+CreateFile(){
+
+  PERMISSION=$1
+  FILE=$2
+  install -m 766 /dev/null $FILE
+
+
+}
+############################################################
+############################################################
+# Disable                                                  #
+############################################################
 Disable(){
 
   if [ -f $STOP_FILE ];then
@@ -37,18 +50,12 @@ Disable(){
     exit
   fi
 
+  # "Create file with read write permission for all"
+  CreateFile 766 $STOP_FILE
+
   MSG=$1
-  DATE=`date '+%Y-%m-%d %H:%M:%S'`
+  Log "Disable monitor" "$MSG"
 
-  touch $STOP_FILE
-
-  LOG="$DATE | Disable monitor"
-
-  if [ ! -z $MSG ];then
-    LOG="$LOG | MSG: $MSG"
-  fi
-
-  echo $LOG >> monitor.log
 }
 ############################################################
 ############################################################
@@ -61,14 +68,26 @@ Enable(){
     exit
   fi
 
-  MSG=$1
-  DATE=`date '+%Y-%m-%d %H:%M:%S'`
-
   rm $STOP_FILE
 
-  LOG="$DATE | Enable monitor"
+  MSG=$1
+  Log "Enable monitor" "$MSG"
 
-  if [ ! -z $MSG ];then
+}
+###########################################################
+############################################################
+# Log                                                   #
+############################################################
+Log(){
+
+  PROMPT=$1
+  MSG=$2
+
+  DATE=`date '+%Y-%m-%d %H:%M:%S'`
+
+  LOG="$DATE | $PROMPT"
+
+  if [ ! -z "$MSG" ];then
     LOG="$LOG | MSG: $MSG"
   fi
 
@@ -80,6 +99,8 @@ Enable(){
 # Run                                                      #
 ############################################################
 Run(){
+
+  MSG=$1
 
   if [ -f $STOP_FILE ];then
     echo "Monitor disbled. Please run 'monitor.sh enable'"
@@ -93,25 +114,24 @@ Run(){
   STATUS=$(docker inspect --format='{{.State.Status}}' $CONTAINER)
   STATUS2=$(docker exec  nginx true 2>/dev/null || echo "not running")
 
+  # STATUS2="not running"
+
   if [[ $STATUS != "running" ]] || [[ $STATUS2 = "not running" ]]; then
 
     echo "Container $CONTAINER is down restarting $STATUS"
 
-    STATE=$(docker inspect --format='{{.State}}' $CONTAINER)
+    STATE=$(docker inspect --format='{{json .State}}' $CONTAINER)
 
-    if [ ! -f monitor.log ]; then
-      touch monitor.log
-    fi
-
-    echo "$DATE | STATUS: $STATUS | STATUS2: $STATUS2 |  STATE: $STATE" >> monitor.log
+    PROMPT="Run monitor | STATUS: $STATUS | STATUS2: $STATUS2 |  STATE: $STATE"
+    Log "$PROMPT" "$MSG"
 
     docker start $CONTAINER
 
-else
+  else
 
-  echo "Container $CONTAINER is up and running $STATUS"
+    echo "Container $CONTAINER is up and running $STATUS"
 
-fi
+  fi
 }
 ###########################################################
 ###########################################################
@@ -119,33 +139,52 @@ fi
 ############################################################
 ############################################################
 
+# When you run shift, the current positional parameters are 
+# shifted left n times.
+#CMD=$1; shift;
+#OPTIND=1
 
-# Get the options
-while getopts ":h" option; do
-   case $option in
-      h/help) # display Help
-         Help
-         exit;;
-      m/message) # add message
-         MSG=$OPTARG
-         exit;;
-      \?) # Invalid option
-         echo "Error: Invalid option"
-         exit;;
-   esac
+# NOTE: One of the many things that getopt does while parsing options is to 
+# rearrange the arguments, so that non-option arguments come last, and 
+# combined short options are split up. 
+# NOTE: This requires GNU getopt.  On Mac OS X and FreeBSD, you have to install this
+# separately; see below. 
+TEMP=$(getopt -o chm: --long clear-log,help,message: -n 'javawrap' -- "$@")
+
+if [ $? != 0 ] ; then echo "Terminating..." >&2 ; exit 1 ; fi
+
+# NOTE: So, TEMP contains the rearranged, quoted, split-up options, 
+# and using eval set makes them script arguments.
+# NOTE: The quotes around '$TEMP': they are essential!
+eval set -- "$TEMP"
+
+MSG=
+while true; do
+  # echo "Current positional argument: $1"
+  case "$1" in
+    -c | --clear-log ) rm monitor.log; shift ;;
+    -h | --help ) Help; exit;;
+    -m | --message ) MSG="$2"; shift 2 ;;
+    -- ) shift; break ;;
+    * ) break ;;
+  esac
 done
 
-CMD=$1
+CMD=$1;
+
+if [ ! -f monitor.log ]; then
+   CreateFile 766 monitor.log
+fi
 
 case $CMD in
    disable) # Run monitoring service 
-     Disable $MSG
+     Disable "$MSG"
      exit;;
    enable) # Run monitoring service 
-     Enable $MSG
+     Enable "$MSG"
      exit;;
    run) # Run monitoring service 
-     Run $MSG
+     Run "$MSG"
      exit;;
    "") # Display help with no command 
      Help
