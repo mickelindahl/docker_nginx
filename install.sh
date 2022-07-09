@@ -67,7 +67,6 @@ InstallCron(){
 
   if [ ! -z "$MAILTO" ];then
     sed  -i '1i MAILTO="'$MAILTO'"' $PATH_CRON/nginx-cron
-    sed  -i '1i MAILTO="'$MAILTO'"' $PATH_CRON/nginx-monitor-cron
   fi
 }
 ########################################################
