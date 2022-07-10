@@ -11,6 +11,7 @@ certbot*
 
 # Localt scripts
 copy_all_certs.sh
+reinstall.sh
 #renew-certs.sh
 
 # No virtual hosts
@@ -25,6 +26,7 @@ monitor.log
 monitor.disable
 renew-certs.log
 install.log
+reinstall-last-run.log
 
 # Redirects conf
 redirects.conf
